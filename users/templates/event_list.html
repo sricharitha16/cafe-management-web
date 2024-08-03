@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Upcoming Events</h2>
+  <div class="event-grid">
+    {% for event in events %}
+      <div class="event-tile">
+        <img src="{{ event.image.url }}" alt="{{ event.title }}" class="event-image">
+        <h3>{{ event.title }}</h3>
+        <p>{{ event.description|truncatewords:20 }}</p>
+        <p><strong>Date:</strong> {{ event.date|date:"M d, Y" }}</p>
+        <p><strong>Location:</strong> {{ event.location }}</p>
+        {% if request.user.is_authenticated %}
+          <div class="event-actions">
+            {% if request.user in event.participants.all %}
+              <form action="{% url 'event_unsignup' event.id %}" method="post">
+                {% csrf_token %}
+               <button type="submit" class="btn btn-sm btn-danger" name="optout">Opt Out</a> </button>
+
+              </form>
+            {% else %}
+              <form action="{% url 'event_signup' event.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-success" name="joinus">Join Us</button>
+              </form>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

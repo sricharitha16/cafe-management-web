@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block title %}Cafe Vibe{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+  </head>
+  <body>
+    <header>
+  
+    <!-- <button class="openbtn" onclick="openNav()">&#9776; Open Navigation</button> -->
+  
+      <h1>
+        <a href="javascript:void(0)" onclick="toggleNav()">
+          <img src="{% static 'cafelogo.png' %}" alt="Cafe Events Logo" height="75">
+      </a>      
+      </h1>
+      <nav>
+        <ul>
+          {% if user.is_authenticated %}
+            <ul class="navbar-nav ml-auto">
+              <li>Welcome, {{ user.get_full_name }}!</li>
+            </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'event_list' %}">Upcoming Events</a>
+              </li>
+              {% if is_organiser %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'create_event' %}">Host an Event</a>
+                </li>
+              {% endif %}
+              <li class="nav-item">
+                <form method="POST" action="{% url 'logout' %}">
+                  {% csrf_token %}
+                  <button class="btn btn-link nav-link" type="submit">Logout</button>
+                </form>
+              </li>
+            </ul>
+          {% else %}
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'register' %}">Join Us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Sign In</a>
+              </li>
+            </ul>
+          {% endif %}
+        </ul>
+      </nav>
+    </header>
+
+    <div id="navbar" class="sidebar">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <a href="{% url 'home' %}">Homepage</a>
+      <a href="{% url 'about' %}">About Us</a>
+      <a href="{% url 'menu' %}">Menu</a>
+      <a href="{% url 'item' %}">Best Sellers</a>
+      <a href="{% url 'event_list' %}">Events</a>
+      <a href="{% url 'contact' %}">Contact Us</a>
+      <a href="{% url 'feedback' %}">Feedback</a>
+  </div>
+
+  <!-- Message Display Area -->
+  <div class="message-container">
+    {% if messages %}
+      {% for message in messages %}
+        <div class="message {{ message.tags }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+  
+    <main>
+      {% block content %}
+      {% endblock %}
+    </main>
+    <footer>
+      <p>&copy; 2023 Cafe Vibe</p>
+    </footer>
+
+    <script>
+      function toggleNav() {
+          var navbar = document.getElementById("navbar");
+          if (navbar.style.width == "250px") {
+              navbar.style.width = "0";
+          } else {
+              navbar.style.width = "250px";
+          }
+      }
+
+      function closeNav() {
+        document.getElementById("navbar").style.width = "0";
+    }
+  </script>
+  
+  </body>
+</html>

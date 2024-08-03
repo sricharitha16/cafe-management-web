@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="hero-image">
+    <div class="hero-text">
+      <h1>Welcome to Café Vibe</h1>
+      <p>Experience the joy of community and coffee</p>
+      <a href="{% url 'event_list' %}" class="btn" name="explore">Explore Our Events</a>
+    </div>
+  </div>
+
+  <div class="features">
+    <h2>Discover the Essence of Café Vibe</h2>
+    <div class="feature">
+      <i class="fas fa-coffee"></i>
+      <h3>Exquisite Coffee</h3>
+      <p>Indulge in our handcrafted coffees and beverages, perfected for every palate.</p>
+    </div>
+    <div class="feature">
+      <i class="fas fa-music"></i>
+      <h3>Live Music Nights</h3>
+      <p>Join us for enchanting evenings with live music, creating memorable moments.</p>
+    </div>
+    <div class="feature">
+      <i class="fas fa-utensils"></i>
+      <h3>Gourmet Bites</h3>
+      <p>Savor our selection of gourmet bites and treats, perfect for any time of the day.</p>
+    </div>
+    <div class="feature">
+      <i class="fas fa-users"></i>
+      <h3>Community Gatherings</h3>
+      <p>Be a part of our community events that bring people together in a warm, friendly atmosphere.</p>
+    </div>
+  </div>
+{% endblock %}
